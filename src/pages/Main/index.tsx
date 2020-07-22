@@ -2,14 +2,8 @@ import React from 'react';
 
 import { Container } from './styles';
 
-import SidebarLeft from '../../components/SidebarLeft';
-
 const Main: React.FC = () => {
-  return (
-    <Container>
-      <SidebarLeft />
-    </Container>
-  );
+  return <Container>dasdsa</Container>;
 };
 
 export default Main;
