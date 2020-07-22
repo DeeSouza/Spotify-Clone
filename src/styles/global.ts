@@ -1,8 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap');
-
   * {
     margin: 0;
     padding: 0;
@@ -21,7 +19,7 @@ export default createGlobalStyle`
   }
 
   body, input, button {
-    font-family: 'Poppins', serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 16px;
   }
 

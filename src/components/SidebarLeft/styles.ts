@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+interface MenuProps {
+  active: number;
+}
+
 export const Separator = styled.div`
   height: 1px;
   background-color: #5a5a5a;
@@ -72,14 +76,24 @@ export const Container = styled.aside`
   }
 `;
 
-export const Menu = styled.ul`
+export const Menu = styled.ul<MenuProps>`
   list-style: none;
   width: 100%;
-  padding: 40px 0px;
+  padding: 50px 0px;
   text-align: center;
 
   li {
     padding: 5px 0px;
+
+    &:nth-child(${(props) => props.active}) {
+      a {
+        border-left: 3px solid #05d35e;
+
+        svg {
+          fill: #05d35e;
+        }
+      }
+    }
 
     a {
       width: 100%;

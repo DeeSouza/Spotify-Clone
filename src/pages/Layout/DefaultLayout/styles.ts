@@ -6,8 +6,13 @@ export const Container = styled.div`
   flex-direction: column;
 `;
 
-export const Content = styled.div`
+export const WrapperContent = styled.div`
   display: flex;
   flex-direction: row;
+  flex: 1;
+`;
+
+export const Content = styled.div`
+  padding: 0px 50px;
   flex: 1;
 `;
