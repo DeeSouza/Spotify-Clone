@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import {
   FaSpotify,
   FaHeadphones,
@@ -13,12 +13,6 @@ import {
 import { Container, Menu, Separator } from './styles';
 
 const SidebarLeft: React.FC = () => {
-  const [linkClicked, setLinkClicked] = useState(1);
-
-  const handleLinkClicked = useCallback((index: number) => {
-    setLinkClicked(index);
-  }, []);
-
   return (
     <Container>
       <div className="logo">
@@ -29,31 +23,31 @@ const SidebarLeft: React.FC = () => {
 
       <Separator />
 
-      <Menu active={linkClicked}>
+      <Menu>
         <li>
-          <Link to="/" onClick={() => handleLinkClicked(1)}>
+          <NavLink to="/" activeClassName="active">
             <FaTachometerAlt size={20} color="gray" />
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/" onClick={() => handleLinkClicked(2)}>
+          <NavLink to="/a" activeClassName="active">
             <FaHeadphones size={20} color="gray" />
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/" onClick={() => handleLinkClicked(3)}>
+          <NavLink to="/b" activeClassName="active">
             <FaMicrophone size={20} color="gray" />
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/" onClick={() => handleLinkClicked(4)}>
+          <NavLink to="/c" activeClassName="active">
             <FaMapMarked size={20} color="gray" />
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/" onClick={() => handleLinkClicked(5)}>
+          <NavLink to="/d" activeClassName="active">
             <FaSlidersH size={20} color="gray" />
-          </Link>
+          </NavLink>
         </li>
       </Menu>
 

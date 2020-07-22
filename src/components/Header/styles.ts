@@ -8,11 +8,4 @@ export const Container = styled.header`
 
 export const WrapperForm = styled.div`
   flex: 1;
-
-  input {
-    height: 50px;
-    background-color: transparent;
-    border: none;
-    color: gray;
-  }
 `;
