@@ -8,4 +8,32 @@ export const Container = styled.header`
 
 export const WrapperForm = styled.div`
   flex: 1;
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const Profile = styled.div`
+  display: flex;
+
+  .info {
+    p {
+      color: gray;
+      font-size: 13px;
+      font-weight: 500;
+
+      strong {
+        color: #fff;
+        font-size: 15px;
+      }
+    }
+
+    span {
+      color: #05d35e;
+      font-size: 11px;
+      padding: 0px 6px;
+      border-radius: 40px;
+      border: 1px solid #05d35e;
+      font-weight: 500;
+    }
+  }
 `;
