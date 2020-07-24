@@ -1,46 +1,41 @@
-import React, { useCallback, useState, useEffect } from 'react';
-import qs from 'querystring';
-
+import React, { useCallback, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+
 import { Form } from '@unform/web';
 import { FaSearch } from 'react-icons/fa';
 
 import InputSearch from '../InputSearch';
 
+import { useAuth } from '../../hooks/auth';
+
 import { Container, WrapperForm, Profile } from './styles';
-import api from '../../services/authorize';
 
 const Header: React.FC = () => {
+  const { signIn } = useAuth();
   const location = useLocation();
 
   const handleSubmit = useCallback((data) => {
     console.log(data);
   }, []);
 
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const code = params.get('code');
+  const handleSignIn = useCallback(() => {
+    const urlAuthorize = `https://accounts.spotify.com/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&response_type=code&redirect_uri=http://localhost:3000&scope=user-read-private%20user-read-email&state=34fFs29kd09`;
 
-    async function loadAuthorize(): Promise<void> {
-      const bodyParams = {
-        code,
-        grant_type: 'authorization_code',
-        redirect_uri: 'http://localhost:3000',
-      };
+    const windowSignIn = window.open(
+      urlAuthorize,
+      'Sign In Spotify',
+      'width=500, height=500',
+    );
 
-      const response = await api.post('api/token', qs.stringify(bodyParams), {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      });
-
-      console.log(response.data);
+    if (windowSignIn) {
+      windowSignIn.opener.location.reload(true);
+      windowSignIn.close();
     }
+  }, []);
 
-    loadAuthorize();
-  }, [location.search]);
-
-  const urlAuthorize = `https://accounts.spotify.com/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&response_type=code&redirect_uri=http://localhost:3000&scope=user-read-private%20user-read-email&state=34fFs29kd09`;
+  useEffect(() => {
+    signIn();
+  }, [signIn, location.search]);
 
   return (
     <Container>
@@ -55,12 +50,11 @@ const Header: React.FC = () => {
 
         <Profile>
           <div className="info">
-            <p>
-              <a href={urlAuthorize}>Sign In</a>
-            </p>
+            <button type="button" onClick={handleSignIn}>
+              Sign In
+            </button>
             <span>PREMIUM</span>
           </div>
-          <img src="" alt="You" />
         </Profile>
       </WrapperForm>
     </Container>

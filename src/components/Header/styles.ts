@@ -27,6 +27,14 @@ export const Profile = styled.div`
       }
     }
 
+    button {
+      background: none;
+      border: 0;
+      color: #fff;
+      font-size: 13px;
+      display: block;
+    }
+
     span {
       color: #05d35e;
       font-size: 11px;
