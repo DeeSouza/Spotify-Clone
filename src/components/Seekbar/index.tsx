@@ -1,10 +1,8 @@
 import React from 'react';
-import { FaHeart } from 'react-icons/fa';
 import {
   IoMdPlay,
   IoMdSkipForward,
   IoMdSkipBackward,
-  IoMdPause,
   IoMdShuffle,
   IoMdRepeat,
   IoMdList,
@@ -25,17 +23,15 @@ const Seekbar: React.FC = () => {
     <Container>
       <CurrentMusic>
         <img
-          src="https://upload.wikimedia.org/wikipedia/pt/thumb/7/78/Red_Hot_Chili_Peppers_-_Californication.jpg/220px-Red_Hot_Chili_Peppers_-_Californication.jpg"
-          alt="RHCP"
+          src="https://upload.wikimedia.org/wikipedia/pt/thumb/3/33/Audioslave_-_Audioslave_%28%C3%A1lbum%29.jpg/220px-Audioslave_-_Audioslave_%28%C3%A1lbum%29.jpg"
+          alt="Audioslave"
         />
 
         <div className="infoMusic">
-          <strong className="music">Scar Tissue</strong>
-          <strong className="author">Red Hot Chilli Peppers</strong>
-          <strong className="album">Californication</strong>
+          <strong className="music">Be Yourself</strong>
+          <strong className="author">Audioslave</strong>
+          <strong className="album">Audioslave</strong>
         </div>
-
-        <FaHeart size={18} color="#6d6d6d" />
       </CurrentMusic>
 
       <ControlsSeekBar>

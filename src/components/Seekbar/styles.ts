@@ -1,7 +1,11 @@
 import styled from 'styled-components';
+import { darken } from 'polished';
 
 export const Container = styled.div`
-  background-color: #17181c;
+  background-color: ${(props) =>
+    props.theme.title === 'light'
+      ? darken(0.07, props.theme.colors.background)
+      : darken(0.06, props.theme.colors.background)};
   height: 120px;
   display: flex;
 `;
@@ -26,16 +30,8 @@ export const CurrentMusic = styled.div`
     strong {
       display: block;
 
-      &.author {
-        color: #fff;
-      }
-
-      &.music {
-        color: #c7c7c7;
-      }
-
       &.album {
-        color: #05d35e;
+        color: ${(props) => props.theme.colors.primary};
       }
     }
   }
@@ -47,7 +43,7 @@ export const CurrentMusic = styled.div`
     transition: all 0.25s ease-out;
 
     &:hover {
-      fill: #05d35e;
+      background-color: ${(props) => props.theme.colors.primary};
     }
   }
 `;
@@ -71,9 +67,10 @@ export const ControlsSeekBar = styled.div`
       vertical-align: middle;
       cursor: pointer;
       transition: all 0.25s ease-out;
+      fill: ${(props) => props.theme.colors.icons};
 
       &:hover {
-        fill: #05d35e;
+        fill: ${(props) => props.theme.colors.primary};
       }
     }
   }
@@ -102,14 +99,14 @@ export const SeekbarMusic = styled.div`
     div {
       height: 100%;
       width: 40%;
-      background-color: #05d35e;
+      background-color: ${(props) => props.theme.colors.primary};
       position: relative;
 
       &:after {
         width: 10px;
         height: 10px;
         border-radius: 50%;
-        background-color: #05d35e;
+        background-color: ${(props) => props.theme.colors.primary};
         position: absolute;
         right: -5px;
         top: -2.5px;
@@ -136,13 +133,14 @@ export const Options = styled.div`
       vertical-align: middle;
       cursor: pointer;
       transition: all 0.25s ease-out;
+      fill: ${(props) => props.theme.colors.icons};
 
       &:nth-child(2) {
-        margin: 0px 10px 0px 20px;
+        margin: 0px 10px 0px 10px;
       }
 
       &:hover {
-        fill: #05d35e;
+        fill: ${(props) => props.theme.colors.primary};
       }
     }
   }
@@ -164,14 +162,14 @@ export const VolumeBar = styled.div`
     div {
       height: 100%;
       width: 20%;
-      background-color: #05d35e;
+      background-color: ${(props) => props.theme.colors.primary};
       position: relative;
 
       &:after {
         width: 10px;
         height: 10px;
         border-radius: 50%;
-        background-color: #05d35e;
+        background-color: ${(props) => props.theme.colors.primary};
         position: absolute;
         right: -5px;
         top: -2.5px;

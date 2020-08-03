@@ -12,7 +12,7 @@ export const Container = styled.div<ContainerProps>`
   svg {
     margin-right: 20px;
     fill: ${(props) =>
-      props.isFocused || props.isFilled ? '#05d35e' : 'gray'};
+      props.isFocused || props.isFilled ? props.theme.colors.primary : 'gray'};
   }
 
   input {

@@ -17,7 +17,7 @@ const SidebarLeft: React.FC = () => {
     <Container>
       <div className="logo">
         <Link to="/">
-          <FaSpotify color="#05d35e" size={40} />
+          <FaSpotify size={40} />
         </Link>
       </div>
 

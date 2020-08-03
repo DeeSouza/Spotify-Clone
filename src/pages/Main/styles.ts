@@ -6,6 +6,5 @@ export const Container = styled.div`
 
   h1 {
     font-size: 18px;
-    color: gray;
   }
 `;

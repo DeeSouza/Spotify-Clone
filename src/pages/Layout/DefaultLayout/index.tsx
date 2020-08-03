@@ -7,14 +7,18 @@ import Header from '../../../components/Header';
 
 import { Container, WrapperContent, Content } from './styles';
 
-const DefaultLayout: React.FC = ({ children }) => {
+interface IProps {
+  toggleTheme(): void;
+}
+
+const DefaultLayout: React.FC<IProps> = ({ children, toggleTheme }) => {
   return (
     <Container>
       <WrapperContent>
         <SidebarLeft />
 
         <Content>
-          <Header />
+          <Header toggleTheme={toggleTheme} />
 
           {children}
         </Content>

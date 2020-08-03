@@ -24,7 +24,7 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 const AuthProvider: React.FC = ({ children }) => {
   const location = useLocation();
-  const [data, setData] = useState<AuthState>(() => {
+  const [, setData] = useState<AuthState>(() => {
     const accessToken = localStorage.getItem('@SpotifyWebDee:access_token');
     const refreshToken = localStorage.getItem('@SpotifyWebDee:refresh_token');
 
@@ -73,7 +73,7 @@ const AuthProvider: React.FC = ({ children }) => {
       accessToken: access_token,
       refreshToken: refresh_token,
     });
-  }, []);
+  }, [location.search]);
 
   const signOut = useCallback(() => {
     localStorage.removeItem('@SpotifyWebDee:access_token');

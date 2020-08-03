@@ -2,12 +2,15 @@ import React from 'react';
 import { Switch } from 'react-router-dom';
 
 import Main from '../pages/Main';
-
 import Route from './Route';
 
-const Routes: React.FC = () => (
+interface IProps {
+  toggleTheme(): void;
+}
+
+const Routes: React.FC<IProps> = ({ toggleTheme }) => (
   <Switch>
-    <Route path="/" exact component={Main} />
+    <Route path="/" exact component={Main} toggleTheme={toggleTheme} />
   </Switch>
 );
 

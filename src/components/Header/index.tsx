@@ -1,8 +1,10 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useContext, useCallback, useEffect } from 'react';
+import { ThemeContext } from 'styled-components';
+import { shade } from 'polished';
 import { useLocation } from 'react-router-dom';
-
-import { Form } from '@unform/web';
 import { FaSearch } from 'react-icons/fa';
+import { Form } from '@unform/web';
+import Switch from 'react-switch';
 
 import InputSearch from '../InputSearch';
 
@@ -10,8 +12,13 @@ import { useAuth } from '../../hooks/auth';
 
 import { Container, WrapperForm, Profile } from './styles';
 
-const Header: React.FC = () => {
+interface IProps {
+  toggleTheme(): void;
+}
+
+const Header: React.FC<IProps> = ({ toggleTheme }) => {
   const { signIn } = useAuth();
+  const { colors, title } = useContext(ThemeContext);
   const location = useLocation();
 
   const handleSubmit = useCallback((data) => {
@@ -50,10 +57,22 @@ const Header: React.FC = () => {
 
         <Profile>
           <div className="info">
+            <Switch
+              onChange={toggleTheme}
+              checked={title === 'dark'}
+              checkedIcon={false}
+              uncheckedIcon={false}
+              height={10}
+              width={40}
+              handleDiameter={20}
+              offColor={shade(0.45, colors.background)}
+              onColor={colors.secondary}
+              offHandleColor={colors.primary}
+            />
+
             <button type="button" onClick={handleSignIn}>
               Sign In
             </button>
-            <span>PREMIUM</span>
           </div>
         </Profile>
       </WrapperForm>

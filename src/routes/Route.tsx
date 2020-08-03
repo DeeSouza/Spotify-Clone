@@ -8,14 +8,19 @@ import DefaultLayout from '../pages/Layout/DefaultLayout';
 
 interface RouteProps extends ReactDOMRouteProps {
   component: React.ComponentType;
+  toggleTheme(): void;
 }
 
-const Route: React.FC<RouteProps> = ({ component: Component, ...rest }) => {
+const Route: React.FC<RouteProps> = ({
+  component: Component,
+  toggleTheme,
+  ...rest
+}) => {
   return (
     <ReactDOMRoute
       {...rest}
       render={() => (
-        <DefaultLayout>
+        <DefaultLayout toggleTheme={toggleTheme}>
           <Component />
         </DefaultLayout>
       )}

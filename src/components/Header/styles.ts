@@ -16,32 +16,16 @@ export const Profile = styled.div`
   display: flex;
 
   .info {
-    p {
-      color: gray;
-      font-size: 13px;
-      font-weight: 500;
-
-      strong {
-        color: #fff;
-        font-size: 15px;
-      }
-    }
+    display: flex;
+    align-items: center;
 
     button {
       background: none;
       border: 0;
-      color: #fff;
       font-size: 13px;
       display: block;
-    }
-
-    span {
-      color: #05d35e;
-      font-size: 11px;
-      padding: 0px 6px;
-      border-radius: 40px;
-      border: 1px solid #05d35e;
-      font-weight: 500;
+      margin-left: 10px;
+      color: ${(props) => props.theme.colors.text};
     }
   }
 `;

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { darken } from 'polished';
 
 export const Separator = styled.div`
   height: 1px;
@@ -11,7 +12,7 @@ export const Container = styled.aside`
   height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: #1d1e24;
+  background-color: ${(props) => darken(0.05, props.theme.colors.background)};
   width: 70px;
 
   div {
@@ -24,7 +25,7 @@ export const Container = styled.aside`
 
       &:hover {
         a {
-          box-shadow: #05d35e 0px 0px 22px -4px;
+          box-shadow: ${(props) => props.theme.colors.primary} 0px 0px 22px -4px;
         }
       }
 
@@ -35,6 +36,7 @@ export const Container = styled.aside`
 
       svg {
         vertical-align: middle;
+        fill: ${(props) => props.theme.colors.primary};
       }
     }
 
@@ -61,10 +63,10 @@ export const Container = styled.aside`
 
       &:hover {
         a {
-          border-left: 3px solid #05d35e;
+          border-left: 3px solid ${(props) => props.theme.colors.primary};
 
           svg {
-            fill: #05d35e;
+            fill: ${(props) => props.theme.colors.primary};
           }
         }
       }
@@ -91,10 +93,10 @@ export const Menu = styled.ul`
       transition: all 0.25s ease-out;
 
       &.active {
-        border-left: 3px solid #05d35e;
+        border-left: 3px solid ${(props) => props.theme.colors.primary};
 
         svg {
-          fill: #05d35e;
+          fill: ${(props) => props.theme.colors.primary};
         }
       }
 
@@ -107,10 +109,10 @@ export const Menu = styled.ul`
     &:hover,
     &.active {
       a {
-        border-left: 3px solid #05d35e;
+        border-left: 3px solid ${(props) => props.theme.colors.primary};
 
         svg {
-          fill: #05d35e;
+          fill: ${(props) => props.theme.colors.primary};
         }
       }
     }
