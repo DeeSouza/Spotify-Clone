@@ -1,39 +1,49 @@
 import React, { useState, useContext, createContext, useCallback } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 
-import qs from 'querystring';
+import api from '../services/api';
 
-import api from '../services/authorize';
+interface User {
+  id: string;
+  display_name: string;
+  followers: {
+    total: number;
+  };
+  email: string;
+  images: [
+    {
+      url: string;
+    },
+  ];
+}
 
 interface AuthContextData {
   signIn(): Promise<void>;
   signOut(): void;
-}
-
-interface ResponseData {
-  access_token: string;
-  refresh_token: string;
+  user: User;
 }
 
 interface AuthState {
   accessToken: string | null;
-  refreshToken: string | null;
+  user: User;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 const AuthProvider: React.FC = ({ children }) => {
   const location = useLocation();
-  const [, setData] = useState<AuthState>(() => {
-    const accessToken = localStorage.getItem('@SpotifyWebDee:access_token');
-    const refreshToken = localStorage.getItem('@SpotifyWebDee:refresh_token');
+  const history = useHistory();
 
-    if (accessToken) {
+  const [data, setData] = useState<AuthState>(() => {
+    const accessToken = localStorage.getItem('@SpotifyWebDee:access_token');
+    const user = localStorage.getItem('@SpotifyWebDee:user');
+
+    if (accessToken && user) {
       api.defaults.headers.authorization = `Bearer ${accessToken}`;
 
       return {
         accessToken,
-        refreshToken,
+        user: JSON.parse(user),
       };
     }
 
@@ -41,49 +51,35 @@ const AuthProvider: React.FC = ({ children }) => {
   });
 
   const signIn = useCallback(async () => {
-    const params = new URLSearchParams(location.search);
-    const code = params.get('code');
+    const urlParams = new URLSearchParams(location.hash.replace('#', '?'));
+    const accessToken = urlParams.get('access_token');
 
-    if (!code) return;
+    if (accessToken) {
+      localStorage.setItem('@SpotifyWebDee:access_token', accessToken);
+      api.defaults.headers.authorization = `Bearer ${accessToken}`;
 
-    const bodyParams = {
-      code,
-      grant_type: 'authorization_code',
-      redirect_uri: 'http://localhost:3000',
-    };
+      const user = await api.get('/me');
 
-    const response = await api.post<ResponseData>(
-      'api/token',
-      qs.stringify(bodyParams),
-      {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      },
-    );
+      setData({
+        accessToken,
+        user: user.data,
+      });
 
-    const { access_token, refresh_token } = response.data;
+      localStorage.setItem('@SpotifyWebDee:user', JSON.stringify(user.data));
 
-    localStorage.setItem('@SpotifyWebDee:access_token', access_token);
-    localStorage.setItem('@SpotifyWebDee:refresh_token', refresh_token);
-
-    api.defaults.headers.authorization = `Bearer ${access_token}`;
-
-    setData({
-      accessToken: access_token,
-      refreshToken: refresh_token,
-    });
-  }, [location.search]);
+      history.push('/');
+    }
+  }, [history, location.hash]);
 
   const signOut = useCallback(() => {
     localStorage.removeItem('@SpotifyWebDee:access_token');
-    localStorage.removeItem('@SpotifyWebDee:refresh_token');
+    localStorage.removeItem('@SpotifyWebDee:user');
 
     setData({} as AuthState);
   }, []);
 
   return (
-    <AuthContext.Provider value={{ signIn, signOut }}>
+    <AuthContext.Provider value={{ signIn, signOut, user: data.user }}>
       {children}
     </AuthContext.Provider>
   );

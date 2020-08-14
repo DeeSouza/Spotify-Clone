@@ -1,7 +1,7 @@
 import React, { useContext, useCallback, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { ThemeContext } from 'styled-components';
 import { shade } from 'polished';
-import { useLocation } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 import { Form } from '@unform/web';
 import Switch from 'react-switch';
@@ -17,32 +17,24 @@ interface IProps {
 }
 
 const Header: React.FC<IProps> = ({ toggleTheme }) => {
-  const { signIn } = useAuth();
+  const { signIn, signOut, user } = useAuth();
   const { colors, title } = useContext(ThemeContext);
-  const location = useLocation();
+  const { hash } = useLocation();
 
   const handleSubmit = useCallback((data) => {
     console.log(data);
   }, []);
 
   const handleSignIn = useCallback(() => {
-    const urlAuthorize = `https://accounts.spotify.com/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&response_type=code&redirect_uri=http://localhost:3000&scope=user-read-private%20user-read-email&state=34fFs29kd09`;
-
-    const windowSignIn = window.open(
-      urlAuthorize,
-      'Sign In Spotify',
-      'width=500, height=500',
-    );
-
-    if (windowSignIn) {
-      windowSignIn.opener.location.reload(true);
-      windowSignIn.close();
-    }
+    const urlAuthorize = `https://accounts.spotify.com/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&response_type=token&redirect_uri=${process.env.REACT_APP_URL}&scope=user-read-private%20user-read-email&state=34fFs29kd09`;
+    window.location.href = urlAuthorize;
   }, []);
 
   useEffect(() => {
-    signIn();
-  }, [signIn, location.search]);
+    if (hash) {
+      signIn();
+    }
+  }, [signIn, hash]);
 
   return (
     <Container>
@@ -68,11 +60,36 @@ const Header: React.FC<IProps> = ({ toggleTheme }) => {
               offColor={shade(0.45, colors.background)}
               onColor={colors.secondary}
               offHandleColor={colors.primary}
+              className="customSwitch"
             />
 
-            <button type="button" onClick={handleSignIn}>
-              Sign In
-            </button>
+            {user ? (
+              <div className="username">
+                {user.images.length > 0 ? (
+                  <div className="cover">
+                    <img src={user.images[0].url} alt={user.display_name} />
+                  </div>
+                ) : (
+                  <div className="cover">
+                    <img
+                      src={`https://api.adorable.io/avatars/34/${user.display_name}`}
+                      alt={user.display_name}
+                    />
+                  </div>
+                )}
+
+                <div className="profile">
+                  <div>{user.display_name}</div>
+                  <button type="button" onClick={signOut}>
+                    <small>SIGN OUT</small>
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <button type="button" onClick={handleSignIn}>
+                SIGN IN
+              </button>
+            )}
           </div>
         </Profile>
       </WrapperForm>
